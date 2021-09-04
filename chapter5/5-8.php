@@ -8,6 +8,6 @@
     for ($i = 0; $i < 1000; $i++) {
         $a += (float)0.001;
         $b += 1;
-        printf("%.7f   %.7f\n", $a, (float)($b / 1000));
+        printf("%9.7f   %9.7f\n", $a, (float)($b / 1000));
     }
 ?>
