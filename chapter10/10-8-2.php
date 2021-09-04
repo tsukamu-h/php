@@ -109,19 +109,19 @@
             echo "それは";
             switch ($type) {
                 case 1:
-                    echo ($day->succeedingDay())->toString(), "\n";
+                    echo ($day->succeedingDay())->toString();
                     break;
                 case 2:
-                    echo ($day->precedingDay())->toString(), "\n";
+                    echo ($day->precedingDay())->toString();
                     break;
                 case 3:
-                    echo ($day->after($n))->toString(), "\n";
+                    echo ($day->after($n))->toString();
                     break;
                 case 4:
-                    echo ($day->before($n))->toString(), "\n";
+                    echo ($day->before($n))->toString();
                     break;
             }
-            echo "です。";
+            echo "です。\n";
         }
     }
     

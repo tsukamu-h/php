@@ -37,20 +37,20 @@
         // 年・月・日を設定
         public function setYear(int $year) {
             $this->year = $year;
-            $this->date = adjustedDay($year, $month, $date);
+            $this->date = $this->adjustedDay($this->year, $this->month, $this->date);
         }
         public function setMonth(int $month) {
-            $this->month = adjustedMonth($month);
-            $this->date = adjustedDay($year, $this->month, $date);
+            $this->month = $this->adjustedMonth($month);
+            $this->date = $this->adjustedDay($this->year, $this->month, $this->date);
         }
         public function setDate(int $date) {
-            $this->date = adjustedDay($year, $month, $date);
+            $this->date = $this->adjustedDay($this->year, $this->month, $date);
         }
 
         public function set(int $year, int $month, int $date) {
             $this->year = $year;
-            $this->month = adjustedMonth($month);
-            $this->date = adjustedDay($year, $this->month, $date);
+            $this->month = $this->adjustedMonth($month);
+            $this->date = $this->adjustedDay($year, $this->month, $date);
         }
 
         // 曜日を求める
@@ -162,7 +162,7 @@
 
         // 次の日の日付を返却するメソッド
         public function succeedingDay() {
-            $temp = new Day($this->year, $this->date, $this->date);
+            $temp = new Day($this->year, $this->month, $this->date);
             $temp->succeed();
             return $temp;
         }
@@ -182,7 +182,7 @@
 
         // 前日の日付を返す
         public function precedingDay() {
-            $temp = new Day($this->year, $this->date, $this->date);
+            $temp = new Day($this->year, $this->month, $this->date);
             $temp->precede();
             return $temp;
         }
@@ -205,7 +205,7 @@
 
         // n日後の日付を返す
         public function after(int $n) {
-            $temp = new Day($this->year, $this->date, $this->date);
+            $temp = new Day($this->year, $this->month, $this->date);
             $temp->succeedDays($n);
             return $temp;
         }
@@ -216,19 +216,25 @@
                 $this->succeedDays(-$n);
             } else if ($n > 0) {
                 $this->date -= $n;
+                // ここで12月に変わる
+                //echo $this->month;
                 while ($this->date < 1) {
-                    if (--$this->month < 1) {
+                    $this->month--;
+                    if ($this->month < 1) {
                         $this->year--;
                         $this->month = 12;
                     }
                     $this->date += $this->dayOfMonth($this->year, $this->month);
+                    //echo $this->toString();
                 }
             }
         }
 
         // n日前に日付を返却するメソッド
         public function before(int $n) {
-            $temp = new Day($this->year, $this->date, $this->date);
+            // monthは10月
+            $temp = new Day($this->year, $this->month, $this->date);
+            // monthは10月
             $temp->precedeDays($n);
             return $temp;
         }

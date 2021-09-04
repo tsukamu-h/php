@@ -1,5 +1,4 @@
 <?php
-    // 問題集の関数のidx2のa.length-n-1が理解できてない
     function aryRmvN($a, int $idx, int $n) {
         for ($i = $idx; $i <= (count($a) - $idx - $n); $i++) {
             $a[$i] = $a[$i + $n];
