@@ -13,6 +13,14 @@ class MiniBlogApplication extends Application {
                 => array('controller' => 'status', 'action' => 'index'),
             '/status/post'
                 => array('controller' => 'status', 'action' => 'post'),
+            /* ユーザ一覧のためのルーティング */
+            '/status/userall'
+                => array('controller' => 'status', 'action' => 'userall'),
+            /* ユーザのパスワード更新のためのルーティング */
+            '/status/passupdate'
+                => array('controller' => 'status', 'action' => 'passupdate'),
+            '/status/passupdatecomp'
+                => array('controller' => 'status', 'action' => 'passupdatecomp'),
             '/user/:user_name'
                 => array('controller' => 'status', 'action' => 'user'),
             '/user/:user_name/status/:id'
@@ -23,6 +31,9 @@ class MiniBlogApplication extends Application {
                 => array('controller' => 'account'),
             '/follow'
                 => array('controller' => 'account', 'action' => 'follow'),
+            // フォローを外すためのルーティング
+            '/followdelete'
+                => array('controller' => 'account', 'action' => 'followdelete'),
         );
     }
 

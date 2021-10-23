@@ -12,6 +12,9 @@ class ClassLoader {
     }
 
     public function loadClass($class) {
+        // $class変数の中身確認
+        // print_r($class);
+        //var_dump($class);
         foreach ($this->dirs as $dir) {
             $file = $dir . '/' . $class . '.php';
             if (is_readable($file)) {

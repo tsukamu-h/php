@@ -8,6 +8,10 @@ class StatusController extends Controller {
         $statuses = $this->db_manager->get('Status')
             ->fetchAllPersonalArchivesByUserId($user['id']);
 
+        // 追加
+        // print_r($user);
+        // print_r($statuses);
+
         return $this->render(array(
             'statuses'  => $statuses,
             'body'      => '',
@@ -90,5 +94,70 @@ class StatusController extends Controller {
         }
 
         return $this->render(array('status' => $status));
+    }
+
+    // ユーザ一覧のためのアクション
+    public function userallAction($params) {
+        $users = $this->db_manager->get('User')
+            ->fetchAllUserName();
+        if (!$users) {
+            $this->forward404();
+        }
+
+        return $this->render(array(
+            'users'      => $users,
+            '_token'    => $this->generateCsrfToken('status/userall'),
+        ));
+    }
+
+    // パスワード変更のためのアクション
+    public function passupdateAction($params) {
+        $user = $this->session->get('user');
+        return $this->render(array(
+            'user'      => $user['id'],
+            '_token' => $this->generateCsrfToken('status/passupdate')));
+    }
+
+    public function passupdatecompAction($params) {
+        $token = $this->request->getPost('_token');
+        if (!$this->checkCsrfToken('status/passupdate', $token)) {
+            // $tokenの中身確認
+            echo "リダイレクト";
+            return $this->redirect('/status/passupdate');
+        }
+
+        $password = $this->request->getPost('password');
+        $password_rewrite = $this->request->getPost('password_rewrite');
+
+        $errors = array();
+        // print_rデバッグ
+        // print_r($this->session->get('csrf_tokens/status/passupdate'));
+        // print_r($token);
+
+        if (!strlen($password)) {
+            $errors[] = 'パスワードを入力してください';
+        } else if (!strlen($password_rewrite)) {
+            $errors[] = 'パスワードを再度入力してください';
+        } else if (4 > strlen($password) || strlen($password) > 30 || 4 > strlen($password_rewrite) || strlen($password_rewrite) > 30) {
+            $errors[] = 'パスワードは4～30文字以内で入力してください';
+        } else if ($password !== $password_rewrite) {
+            $errors[] = 'パスワードを正しく入力してください';
+        }
+
+        $user = $this->session->get('user');
+
+        if (count($errors) === 0) {
+            $this->db_manager->get('User')->updateUserPassword($user['id'], $password);
+
+            // 戻り地がredirect()メソッドを使うのではなくrender()メソッドを使う必要があると思われる
+            //return $this->redirect('/status/passupdatecomp');
+            return $this->render(array());
+        }
+
+        return $this->render(array(
+            'user'      => $user['id'],
+            'errors'    => $errors,
+            '_token'    => $this->generateCsrfToken('status/passupdate'),
+        ), 'passupdate');
     }
 }

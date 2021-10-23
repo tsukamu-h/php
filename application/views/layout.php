@@ -18,6 +18,10 @@
             <?php if ($session->isAuthenticated()): ?>
             <a href="<?php echo $base_url; ?>/">ホーム</a>
             <a href="<?php echo $base_url; ?>/account">アカウント</a>
+            <!-- フォロー機能のためのリンク -->
+            <a href="<?php echo $base_url; ?>/status/userall">ユーザ一覧</a>
+            <!-- パスワード変更するためのリンク -->
+            <a href="<?php echo $base_url; ?>/status/passupdate">パスワード変更</a>
             <?php else: ?>
             <a href="<?php echo $base_url; ?>/account/signin">ログイン</a>
             <a href="<?php echo $base_url; ?>/account/signup">アカウント登録</a>

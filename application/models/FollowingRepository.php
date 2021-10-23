@@ -1,12 +1,12 @@
 <?php
 
-class FollowingRepository extends DbRepostory {
+class FollowingRepository extends DbRepository {
     public function insert($user_id, $following_id) {
         $sql = "INSERT INTO following VALUES(:user_id, :following_id)";
 
         $stmt = $this->execute($sql, array(
             ':user_id'      => $user_id,
-            ':following_id' =>$following_id,
+            ':following_id' => $following_id,
         ));
     }
 
@@ -26,5 +26,17 @@ class FollowingRepository extends DbRepostory {
         }
 
         return false;
+    }
+
+    // フォローを外すdelete文の実装
+    public function delete($user_id, $following_id) {
+        $sql = "DELETE FROM following 
+                    WHERE user_id = :user_id
+                        AND following_id = :following_id";
+
+        $stmt = $this->execute($sql, array(
+            ':user_id'      => $user_id,
+            ':following_id' => $following_id,
+        ));
     }
 }

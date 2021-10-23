@@ -37,11 +37,33 @@ class UserRepository extends DbRepository {
     }
 
     public function fetchAllFollowingsByUserId($user_id) {
-        $sql = "SELECT i.*
-                    FROM user u
-                        LEFT JOIN following f ON f.following_id = u.id
-                    WHERE f.user_id = :user_id";
+        $sql = "SELECT u.*
+                FROM user u
+                    LEFT JOIN following f ON f.following_id = u.id
+                WHERE f.user_id = :user_id";
         
         return $this->fetchAll($sql, array(':user_id' => $user_id));
+    }
+
+    // すべてのユーザIDを取得するメソッド
+    public function fetchAllUserName() {
+        $sql = "SELECT user_name
+                    FROM user";
+
+        return $this->fetchAll($sql, array());
+    }
+
+    // ユーザのパスワード更新メソッド
+    public function updateUserPassword($id, $password) {
+        $password = $this->hashPassword($password);
+
+        $sql = "UPDATE user
+                    SET password = :password
+                    WHERE id = :id";
+
+        $stmt = $this->execute($sql, array(
+        ':id'           => $id,
+        ':password'     => $password,
+        ));
     }
 }

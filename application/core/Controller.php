@@ -75,11 +75,11 @@ abstract class Controller {
             $host = $this->request->getHost();
             $base_url = $this->request->getBaseUrl();
 
-            $url =$protocol . $host . $base_url . $url;
+            $url = $protocol . $host . $base_url . $url;
         }
 
         $this->response->setStatusCode(302, 'Found');
-        $this->response->setHttpHeader('Locatiion', $url);
+        $this->response->setHttpHeader('Location', $url);
     }
 
     protected function generateCsrfToken($form_name) {

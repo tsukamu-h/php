@@ -31,11 +31,11 @@ class Router {
         if ('/' !== substr($path_info, 0, 1)) {
             $path_info = '/' . $path_info;
         }
-
         foreach ($this->routes as $pattern => $params) {
             if (preg_match('#^' . $pattern . '$#', $path_info, $matches)) {
                 $params = array_merge($params, $matches);
-
+                // params変数を表示
+                // print_r($params);
                 return $params;
             }
         }

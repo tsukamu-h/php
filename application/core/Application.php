@@ -6,6 +6,8 @@ abstract class Application {
     protected $response;
     protected $session;
     protected $db_manager;
+    // routerプロパティを追加
+    protected $router;
     protected $login_action = array();
 
     public function __construct($debug = false) {
