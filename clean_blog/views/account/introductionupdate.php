@@ -1,4 +1,4 @@
-
+<?php $this->setLayoutVar('title', '自己紹介文更新') ?>
 
 <!-- Page Header-->
 <header class="masthead" style="background-image: url('assets/img/about-bg.jpg')">

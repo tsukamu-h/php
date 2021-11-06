@@ -23,15 +23,7 @@
                     <!-- * * * * * * * * * * * * * * *-->
                     <!-- * * SB Forms Contact Form * *-->
                     <!-- * * * * * * * * * * * * * * *-->
-                    <!-- Submit error message-->
-                    <!---->
-                    <!-- This is what your users will see when there is-->
-                    <!-- an error submitting the form-->
-                    <div id="submitErrorMessage"><div class="text-center text-danger mb-3">
-                        <?php if (isset($errors) && count($errors) > 0): ?>
-                        <?php echo $this->render('errors', array('errors' => $errors)); ?>
-                        <?php endif; ?>
-                    </div></div>
+                    
                     <!-- This form is pre-integrated with SB Forms.-->
                     <!-- To make this form functional, sign up at-->
                     <!-- https://startbootstrap.com/solution/contact-forms-->
@@ -39,14 +31,19 @@
                     <form action="<?php echo $base_url; ?>/account/authenticate" method="post"
                      id="contactForm" data-sb-form-api-token="API_TOKEN">
                         <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>" />
-                        <div class="form-floating">
-                            <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" name="user_name" value="<?php echo $this->escape($user_name); ?>" />
-                            <label for="name">ユーザ名</label>
-                        </div>
-                        <div class="form-floating">
-                            <input class="form-control" id="password" type="password" placeholder="Enter your email..." data-sb-validations="required,email" name="password" value="<?php echo $this->escape($password); ?>"/>
-                            <label for="email">パスワード</label>
-                        </div>
+                        <!-- Submit error message-->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div id="submitErrorMessage"><div class="text-center text-danger mb-3">
+                            <?php if (isset($errors) && count($errors) > 0): ?>
+                            <?php echo $this->render('errors', array('errors' => $errors)); ?>
+                            <?php endif; ?>
+                        </div></div>
+                    
+                        <!-- 入力フォームを呼び出す -->
+                        <?php echo $this->render('account/inputs', array(
+                            'user_name' => $user_name, 'password' => $password,
+                        )); ?>
                         <br />
                         <!-- Submit success message-->
                         <!---->
